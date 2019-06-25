@@ -3,6 +3,10 @@ import Aux from '../../hoc/Auxillary';
 
 import Burger from '../../components/Burger/Burger'
 import BurgerControl from '../../components/Burger/BuildControls/BuildControls';
+import OrderSummary from '../../components/Burger/orderSummary/orderSummary';
+
+// import Modal
+import Modal from '../../components/ui/modal/modal';
 
 
 const INGREDIENT_PRICES = {
@@ -23,7 +27,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchaseable: false
+        purchaseable: false,
+        purchasing:false
     }
 
     updatePurchaseState(ingredients) {
@@ -61,6 +66,17 @@ class BurgerBuilder extends Component {
         this.updatePurchaseState(updatedIngredients)
     }
 
+    updatePurchase = () => {
+        this.setState({purchasing:true})
+    }
+    cancelPurchase = () => {
+        this.setState({purchasing:false})
+    }
+
+    purchaseContinue = () => {
+        alert('You continue!');
+    }
+
     render() {
         // disable 'less' button in control if ingredients count is zero
         const disabledInfo = { ...this.state.ingredients };
@@ -69,13 +85,20 @@ class BurgerBuilder extends Component {
         }
         return (
             <Aux>
+                <Modal show={this.state.purchasing}
+                 closed={this.cancelPurchase}>
+                 <OrderSummary ingredients={this.state.ingredients}
+                  purchaseCancel={this.cancelPurchase}
+                 purchaseContinue={this.purchaseContinue} /></Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BurgerControl
                     ingredientAdded={this.addIngredientsHandler}
                     ingredientDeducted={this.removeIngredientsHandler}
                     price={this.state.totalPrice}
                     purchaseable={this.state.purchaseable}
-                    disabled={disabledInfo} />
+                    disabled={disabledInfo}
+                    ordered={this.updatePurchase}
+                    />
             </Aux>
         )
     }
