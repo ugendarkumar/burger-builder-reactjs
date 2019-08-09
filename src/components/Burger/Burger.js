@@ -3,16 +3,18 @@ import burgerStyle from './burger.module.css';
 import BurgerIngredient from './BurgerIngredients/BurgerIngredients';
 
 const burger = (props) => {
+console.log(Object.keys(props.ingredients))
     let transformedIngredients = Object.keys(props.ingredients)
         .map(igKey => {
             return [...Array(props.ingredients[igKey])].map((_, i) => { 
+               
                 // Array() forms undefined values of array based on ingredients value, _ will be undefined values
                 return <BurgerIngredient key={igKey + i} type={igKey} />
             })
         }).reduce((acc,x) => {   // using reduce to flatten array of arrays
          return acc.concat(x)
         },[])
-        
+        console.log('[transformed ingredients] ', transformedIngredients)        
        if(transformedIngredients.length === 0){
            transformedIngredients = <p>Please start adding ingredients! </p>
        }
@@ -25,7 +27,6 @@ const burger = (props) => {
 
         </div>
     )
-
 }
 
 export default burger;

@@ -6,8 +6,8 @@ import navItemStyle from './navigationItems.module.css'
 const NavigationItems = (props) => (
     <ul className={navItemStyle.NavigationItems}>
         {/* active is a prop it's a boolean value hence directly passing as prop without value */}
-       <NavigationItem link="/" active >Burger Builder</NavigationItem>
-       <NavigationItem link="/"> Checkout</NavigationItem>
+       <NavigationItem link="/" >Burger Builder</NavigationItem>
+       <NavigationItem link="/orders"> Orders</NavigationItem>
     </ul>
 )
 
